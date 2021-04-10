@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
  
-namespace BTW.Demo {
+namespace Bwt.Demo {
     class Program {
         const char STX = (char)0x02;
         const char ETX = (char)0x03;
