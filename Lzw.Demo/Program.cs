@@ -1,24 +1,67 @@
 ﻿using System;
-using System.IO;
-using Lzw.Demo.Compression;
+using System.Text.RegularExpressions;
 
 namespace Lzw.Demo
 {
-    internal static class Program
+    public class PbvCompressor
     {
-        private static void Main(string[] args)
+        private ICompressorAlgorithm _compressorAlgorithm;
+
+        public ICompressorAlgorithm CompressorAlgorithm
         {
-            var compressor = new LzwCompression();
+            // allows us to set the algorithm at runtime, also lets us set the algorithm dynamically if we creata  factory class
+            set
+            {
+                _compressorAlgorithm = value;
+            }
+        }
 
-            using var fileStream = new FileStream("1.txt", FileMode.Open, FileAccess.Read);
-            using var binaryReader = new BinaryReader(fileStream);
-            using var createFile = new FileStream("1.lzw", FileMode.CreateNew);
-            using var binaryWriter = new BinaryWriter(createFile);
+        public PbvCompressor()
+        {
+            // setting this by default but we could create a facotry class to let us set the algorithm based on arguments passed to the main method
+            // IE. "Compress.exe zip -c blah.txt" would use the zip algorithm as opposed to the default one.
+            CompressorAlgorithm = new PbvCompressorLZW();
+        }
 
-            //todo: use threads or tasks
-            compressor.Compress(binaryReader, binaryWriter);
-            //compressor.Decompress(binaryReader, binaryWriter);
+        private void Start(string argument, string pInFile, string pOutFile)
+        {
+            string newOutFile = FileNameSelector.GetFileName(pOutFile);
 
+            if (newOutFile == null)
+            {
+                Console.WriteLine("Exiting...");
+                Environment.Exit(1);
+            }
+
+            if (argument.Equals("-c"))
+                _compressorAlgorithm.Compress(pInFile, pOutFile);
+            else if (argument.Equals("-d"))
+            {
+                _compressorAlgorithm.Decompress(pInFile, pOutFile);
+            }
+
+            return;
+        }
+
+        static void Main(string[] args)
+        {
+            Regex validCommands = new Regex("-[cdCD]");
+            PbvCompressor pc = null;
+
+            if (args.Length != 3)
+            {
+                Console.WriteLine("Too many or too few arguments! Exiting.");
+                return;
+            }
+            else if (validCommands.IsMatch(args[0])) //if valid argments given proceed
+            {
+                pc = new PbvCompressor();
+                pc.Start(args[0].ToLower(), args[1], args[2]);
+            }
+            else
+                Console.WriteLine("Invalid argument command given. Exiting.");
+
+            return;
         }
     }
 }
