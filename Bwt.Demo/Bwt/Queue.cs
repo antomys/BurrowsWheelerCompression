@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lzw.DemoWithBwt.Bwt
+namespace Bwt.Demo.Bwt
 {
     /// <summary>Implements a priority queue of T, where T has an ordering.</summary>
     /// Elements may be added to the queue in any order, but when we pull

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lzw.DemoWithBwt.Bwt
+namespace Bwt.Demo.Bwt
 {
     public static class Bwt
     {
@@ -11,17 +11,17 @@ namespace Lzw.DemoWithBwt.Bwt
         /// <returns></returns>
         public static byte[] Transform(byte[] input)
         {
-            byte[] output = new byte[input.Length + 4];
-            short[] newInput = new short[input.Length + 1];
+            var output = new byte[input.Length + 4];
+            var newInput = new short[input.Length + 1];
 
-            for (int i = 0; i < input.Length; i++)
-                newInput[i] = (Int16)(input[i] + 1);
+            for (var i = 0; i < input.Length; i++)
+                newInput[i] = (short)(input[i] + 1);
 
             newInput[input.Length] = 0;
-            int[] suffixArray = SuffixArray.Construct(newInput);
-            int end = 0;
-            int outputInd = 0;
-            for (int i = 0; i < suffixArray.Length; i++)
+            var suffixArray = SuffixArray.Construct(newInput);
+            var end = 0;
+            var outputInd = 0;
+            for (var i = 0; i < suffixArray.Length; i++)
             {
                 if (suffixArray[i] == 0)
                 {
@@ -31,7 +31,7 @@ namespace Lzw.DemoWithBwt.Bwt
                 output[outputInd] = (byte)(newInput[suffixArray[i] - 1] - 1);
                 outputInd++;
             }
-            byte[] endByte = IntToByteArr(end);
+            var endByte = IntToByteArr(end);
             endByte.CopyTo(output, input.Length);
             return output;
         }
@@ -42,17 +42,17 @@ namespace Lzw.DemoWithBwt.Bwt
         /// <returns></returns>
         public static byte[] InverseTransform(byte[] input)
         {
-            int Length = input.Length - 4;
-            int I = ByteArrToInt(input, input.Length - 4);
-            int[] freq = new int[256];
+            var length = input.Length - 4;
+            var I = ByteArrToInt(input, input.Length - 4);
+            var freq = new int[256];
             Array.Clear(freq, 0, freq.Length);
             // T1: Number of Preceding Symbols Matching Symbol in Current Position.
-            int[] T1 = new int[Length];
+            var T1 = new int[length];
             // T2: Number of Symbols Lexicographically Less Than Current Symbol
-            int[] T2 = new int[256];
+            var T2 = new int[256];
             Array.Clear(T2, 0, T2.Length);
             // Construct T1
-            for (int i = 0; i < Length; i++)
+            for (var i = 0; i < length; i++)
             {
                 T1[i] = freq[input[i]];
                 freq[input[i]]++;
@@ -61,18 +61,18 @@ namespace Lzw.DemoWithBwt.Bwt
             // Construct T2
             // Add $ special symbol in consideration to be less than any symbol
             T2[0] = 1;
-            for (int i = 1; i < 256; i++)
+            for (var i = 1; i < 256; i++)
             {
                 T2[i] = T2[i - 1] + freq[i - 1];
             }
 
-            byte[] output = new byte[Length];
-            int nxt = 0;
-            for (int i = Length - 1; i >= 0; i--)
+            var output = new byte[length];
+            var nxt = 0;
+            for (var i = length - 1; i >= 0; i--)
             {
                 output[i] = input[nxt];
-                int a = T1[nxt];
-                int b = T2[input[nxt]];
+                var a = T1[nxt];
+                var b = T2[input[nxt]];
                 nxt = a + b;
                 // Add $ special symbol index in consideration
                 if (nxt >= I)
@@ -86,9 +86,9 @@ namespace Lzw.DemoWithBwt.Bwt
         {
             return BitConverter.GetBytes(i);
         }
-        private static int ByteArrToInt(byte[] input, int StartIndex)
+        private static int ByteArrToInt(byte[] input, int startIndex)
         {
-            return BitConverter.ToInt32(input, StartIndex);
+            return BitConverter.ToInt32(input, startIndex);
         }
     }
 }

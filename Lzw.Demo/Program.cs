@@ -45,7 +45,7 @@ namespace Lzw.Demo
 
         static void Main(string[] args)
         {
-            Regex validCommands = new Regex("-[cdCD]");
+            var validCommands = new Regex("-[cdCD]");
             PbvCompressor pc = null;
 
             if (args.Length != 3)
