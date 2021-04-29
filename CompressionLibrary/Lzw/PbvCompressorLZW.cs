@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 
-namespace Lzw.Demo
+namespace CompressionLibrary.Lzw
 {
     //LZW Based Decompressor - basic algorithm used as described on Mark Nelson's website  http://marknelson.us
-    public class PbvCompressorLZW : ICompressorAlgorithm
+    public class PbvCompressorLzw : ICompressorAlgorithm
     {
         private const int MAX_BITS = 14; //maimxum bits allowed to read
         private const int HASH_BIT = MAX_BITS - 8; //hash bit to use with the hasing algorithm to find correct index

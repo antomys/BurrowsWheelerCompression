@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Lzw.DemoWithBwt.Bwt
+namespace CompressionLibrary.Bwt
 {
     public static class SuffixArray
     {
@@ -12,31 +12,31 @@ namespace Lzw.DemoWithBwt.Bwt
         /// <returns></returns>
         public static int[] Construct(short[] str)
         {
-            int[] suffixArray = new int[str.Length];
-            int[] rankArray = new int[str.Length];
-            int[] tempRankArray = new int[str.Length];
+            var suffixArray = new int[str.Length];
+            var rankArray = new int[str.Length];
+            var tempRankArray = new int[str.Length];
 
-            for (int i = 0; i < str.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
                 suffixArray[i] = i;
                 rankArray[i] = str[i];
             }
 
-            for (int k = 1; k < str.Length; k *= 2)
+            for (var k = 1; k < str.Length; k *= 2)
             {
                 CountSort(suffixArray, rankArray, k); // sort SA[i] based on RA[SA[i]+k]
                 CountSort(suffixArray, rankArray, 0);// sort SA[i] based on RA[SA[i]]
 
-                int newRank = 0;
+                var newRank = 0;
                 tempRankArray[suffixArray[0]] = 0;
 
-                for (int i = 1; i < rankArray.Length; i++)
+                for (var i = 1; i < rankArray.Length; i++)
                 {
 
-                    int curRank = rankArray[suffixArray[i]];
-                    int prevRank = rankArray[suffixArray[i - 1]];
-                    int curRankWithOffset = 0;
-                    int prevRankWithOffset = 0;
+                    var curRank = rankArray[suffixArray[i]];
+                    var prevRank = rankArray[suffixArray[i - 1]];
+                    var curRankWithOffset = 0;
+                    var prevRankWithOffset = 0;
 
                     if (suffixArray[i] + k < rankArray.Length)
                         curRankWithOffset = rankArray[suffixArray[i] + k];
@@ -61,36 +61,36 @@ namespace Lzw.DemoWithBwt.Bwt
         /// time Complexity  : O(N)
         private static void CountSort(int[] suffixArray, int[] rankArray, int rankArrayOffset)
         {
-            int freqLength = Math.Max(rankArray.Max()+1, rankArray.Length);
-            int[] frequency = new int[freqLength];
-            int[] cumulativeFrequency = new int[freqLength]; // used as a start index
-            int[] tempSuffixArray = new int[suffixArray.Length];
+            var freqLength = Math.Max(rankArray.Max()+1, rankArray.Length);
+            var frequency = new int[freqLength];
+            var cumulativeFrequency = new int[freqLength]; // used as a start index
+            var tempSuffixArray = new int[suffixArray.Length];
 
-            for (int i = 0; i < rankArray.Length; i++)
+            for (var i = 0; i < rankArray.Length; i++)
             {
-                int val = 0;
+                var val = 0;
                 if (i + rankArrayOffset < rankArray.Length)
                     val = rankArray[i + rankArrayOffset];
                 frequency[val]++;
             }
 
-            for (int i = 1; i < freqLength; i++)
+            for (var i = 1; i < freqLength; i++)
                 cumulativeFrequency[i] = cumulativeFrequency[i - 1] + frequency[i - 1];
 
-            for (int i = 0; i < suffixArray.Length; i++)
+            foreach (var suffix in suffixArray)
             {
                 int newIndex;
-                if (suffixArray[i] + rankArrayOffset < rankArray.Length)
+                if (suffix + rankArrayOffset < rankArray.Length)
                 {
-                    newIndex = cumulativeFrequency[rankArray[suffixArray[i] + rankArrayOffset]];
-                    cumulativeFrequency[rankArray[suffixArray[i] + rankArrayOffset]]++;
+                    newIndex = cumulativeFrequency[rankArray[suffix + rankArrayOffset]];
+                    cumulativeFrequency[rankArray[suffix + rankArrayOffset]]++;
                 }
                 else
                 {
                     newIndex = cumulativeFrequency[0];
                     cumulativeFrequency[0]++;
                 }
-                tempSuffixArray[newIndex] = suffixArray[i];
+                tempSuffixArray[newIndex] = suffix;
             }
             Array.Copy(tempSuffixArray, suffixArray, suffixArray.Length);
         }

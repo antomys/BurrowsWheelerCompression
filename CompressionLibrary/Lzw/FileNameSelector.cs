@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Lzw.DemoWithBwt
+namespace CompressionLibrary.Lzw
 {
     public class FileNameSelector
     {

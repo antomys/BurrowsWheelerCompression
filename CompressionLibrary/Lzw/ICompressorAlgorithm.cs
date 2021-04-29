@@ -1,4 +1,4 @@
-﻿namespace Lzw.DemoWithBwt
+﻿namespace CompressionLibrary.Lzw
 { 
     public interface ICompressorAlgorithm
     {

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using CompressionLibrary.Bwt;
+using CompressionLibrary.Lzw;
 
 namespace Lzw.DemoWithBwt
 {
@@ -21,7 +24,7 @@ namespace Lzw.DemoWithBwt
             CompressorAlgorithm = new PbvCompressorLzw();
         }
 
-        private void Start(string argument, string pInFile, string pOutFile)
+        private async Task Start(string argument, string pInFile, string pOutFile)
         {
             var newOutFile = FileNameSelector.GetFileName(pOutFile);
 
@@ -36,6 +39,30 @@ namespace Lzw.DemoWithBwt
                 case "-c":
                     _compressorAlgorithm.Compress(pInFile, pOutFile);
                     break;
+                case "-bwtc":
+                {
+                    var transformation = Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
+                    var name = Guid.NewGuid() + ".tmp";
+                    await using var fileStream = new FileStream(name, FileMode.Create);
+                    await using var writer = new BinaryWriter(fileStream);
+                    writer.Write(transformation);
+
+                    _compressorAlgorithm.Compress(name, pOutFile);
+                    File.Delete(name);
+                    break;
+                }
+                case "bwtd":
+                {
+                    var transformation = Bwt.InverseTransform(await File.ReadAllBytesAsync(pInFile));
+                    var name = Guid.NewGuid() + ".tmp";
+                    await using var fileStream = new FileStream(name, FileMode.Create);
+                    await using var writer = new BinaryWriter(fileStream);
+                    writer.Write(transformation);
+
+                    _compressorAlgorithm.Decompress(name, pOutFile);
+                    File.Delete(name);
+                    break;
+                }
                 case "-d":
                     _compressorAlgorithm.Decompress(pInFile, pOutFile);
                     break;
@@ -57,10 +84,6 @@ namespace Lzw.DemoWithBwt
             if (validCommands.IsMatch(args[0])) //if valid arguments given proceed
             {
                 var pc = new PbvCompressor();
-                var transformation = Bwt.Bwt.Transform(File.ReadAllBytes(args[1]));
-                using var fileStream = new FileStream("tmp.tmp", FileMode.Create);
-                using var writer = new BinaryWriter(fileStream);
-                writer.Write(transformation);
                 pc.Start(args[0].ToLower(), "tmp.tmp", args[2]);
             }
             else
