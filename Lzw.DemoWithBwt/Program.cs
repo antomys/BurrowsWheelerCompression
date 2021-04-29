@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace Lzw.DemoWithBwt
             // IE. "Compress.exe zip -c blah.txt" would use the zip algorithm as opposed to the default one.
             CompressorAlgorithm = new PbvCompressorLzw();
         }
-
+        
         private async Task Start(string argument, string pInFile, string pOutFile)
         {
             var newOutFile = FileNameSelector.GetFileName(pOutFile);
@@ -44,22 +46,23 @@ namespace Lzw.DemoWithBwt
                     var transformation = Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
                     var name = Guid.NewGuid() + ".tmp";
                     await using var fileStream = new FileStream(name, FileMode.Create);
-                    await using var writer = new BinaryWriter(fileStream);
-                    writer.Write(transformation);
-
+                    await fileStream.WriteAsync(transformation);
+                    await fileStream.DisposeAsync();
+                    
                     _compressorAlgorithm.Compress(name, pOutFile);
                     File.Delete(name);
                     break;
                 }
-                case "bwtd":
+                case "-bwtd":
                 {
                     var transformation = Bwt.InverseTransform(await File.ReadAllBytesAsync(pInFile));
                     var name = Guid.NewGuid() + ".tmp";
                     await using var fileStream = new FileStream(name, FileMode.Create);
-                    await using var writer = new BinaryWriter(fileStream);
-                    writer.Write(transformation);
-
+                    await fileStream.WriteAsync(transformation);
+                    await fileStream.DisposeAsync();
+                   
                     _compressorAlgorithm.Decompress(name, pOutFile);
+                    
                     File.Delete(name);
                     break;
                 }
@@ -67,13 +70,11 @@ namespace Lzw.DemoWithBwt
                     _compressorAlgorithm.Decompress(pInFile, pOutFile);
                     break;
             }
-
-            return;
         }
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            var validCommands = new Regex("-[cdCD]");
+            var validCommands = new Regex("-[cdCDbwtcBWTCbwtdBWTD]");
 
             if (args.Length != 3)
             {
@@ -83,8 +84,11 @@ namespace Lzw.DemoWithBwt
 
             if (validCommands.IsMatch(args[0])) //if valid arguments given proceed
             {
+                var watch = Stopwatch.StartNew();
                 var pc = new PbvCompressor();
-                pc.Start(args[0].ToLower(), "tmp.tmp", args[2]);
+                await pc.Start(args[0].ToLower(), args[1], args[2]);
+                watch.Stop();
+                Console.WriteLine($"Time: {watch.ElapsedMilliseconds} ms");
             }
             else
                 Console.WriteLine("Invalid argument command given. Exiting.");
