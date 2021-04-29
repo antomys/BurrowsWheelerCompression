@@ -42,8 +42,8 @@ namespace CompressionLibrary.Huffman {
 				ifstream.Close ();
 			}
 			catch (Exception e) {
-				throw e;
-			}
+                throw;
+            }
 		}
 
 		public static void Huff (Stream sin, Stream sout, UpdateCrc callback) {

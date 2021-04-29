@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CompressionLibrary.Bwt;
+using CompressionLibrary.Huffman;
 using CompressionLibrary.Lzw;
 
 namespace Lzw.DemoWithBwt
@@ -66,6 +67,16 @@ namespace Lzw.DemoWithBwt
                     File.Delete(name);
                     break;
                 }
+                case "-hc":
+                {
+                    MainAlgorithms.CompressFile(pInFile,pOutFile);
+                    break;
+                }
+                case "-hd":
+                {
+                    MainAlgorithms.DecompressFile(pInFile,pOutFile);
+                    break;
+                }
                 case "-d":
                     _compressorAlgorithm.Decompress(pInFile, pOutFile);
                     break;
@@ -74,7 +85,7 @@ namespace Lzw.DemoWithBwt
 
         private static async Task Main(string[] args)
         {
-            var validCommands = new Regex("-[cdCDbwtcBWTCbwtdBWTD]");
+            var validCommands = new Regex("-[cdCDbwtcBWTCbwtdBWTDhcHChdHD]");
 
             if (args.Length != 3)
             {
