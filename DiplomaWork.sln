@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lzw.DemoWithBwt", "Lzw.Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressionLibrary", "CompressionLibrary\CompressionLibrary.csproj", "{73B29812-B577-41E9-A042-6637DFFA6F2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackCompression", "BackCompression\BackCompression.csproj", "{59416B70-2F32-40C4-8CA1-195267861E10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{73B29812-B577-41E9-A042-6637DFFA6F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B29812-B577-41E9-A042-6637DFFA6F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B29812-B577-41E9-A042-6637DFFA6F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59416B70-2F32-40C4-8CA1-195267861E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59416B70-2F32-40C4-8CA1-195267861E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59416B70-2F32-40C4-8CA1-195267861E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59416B70-2F32-40C4-8CA1-195267861E10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
