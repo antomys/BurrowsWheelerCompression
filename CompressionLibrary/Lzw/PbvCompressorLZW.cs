@@ -25,7 +25,7 @@ namespace CompressionLibrary.Lzw
             _iBitCounter = 0;
         }
 
-        public bool Compress(string pInputFileName, string pOutputFileName)
+        public bool Compress(string pInputFileName, string pOutputFileName, out string fileNamePath)
         {
             Stream reader = null;
             Stream writer = null;
@@ -73,6 +73,7 @@ namespace CompressionLibrary.Lzw
                 if (writer != null)
                    writer.Close();
                 File.Delete(pOutputFileName);
+                fileNamePath = string.Empty;
                 return false;
             }
             finally
@@ -82,7 +83,8 @@ namespace CompressionLibrary.Lzw
                 if (writer != null)
                     writer.Close();
             }
-            
+
+            fileNamePath = Path.GetFullPath(pOutputFileName);
             return true;
         }
 
@@ -123,7 +125,7 @@ namespace CompressionLibrary.Lzw
             }
         }
 
-        public bool Decompress(string pInputFileName, string pOutputFileName)
+        public bool Decompress(string pInputFileName, string pOutputFileName, out string fileNamePath)
         {
             Stream reader = null;
             Stream writer = null;
@@ -198,6 +200,7 @@ namespace CompressionLibrary.Lzw
                 if (writer != null)
                     writer.Close();
                 File.Delete(pOutputFileName);
+                fileNamePath = string.Empty;
                 return false;
             }
             finally
@@ -207,7 +210,7 @@ namespace CompressionLibrary.Lzw
                 if (writer != null)
                     writer.Close();
             }
-
+            fileNamePath = Path.GetFullPath(pOutputFileName);
             return true;
         }
 
