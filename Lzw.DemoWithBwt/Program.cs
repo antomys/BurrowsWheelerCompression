@@ -40,7 +40,7 @@ namespace Lzw.DemoWithBwt
             switch (argument)
             {
                 case "-c":
-                    _compressorAlgorithm.Compress(pInFile, pOutFile);
+                    _compressorAlgorithm.Compress(pInFile, pOutFile, out _);
                     break;
                 case "-bwtc":
                 {
@@ -50,7 +50,7 @@ namespace Lzw.DemoWithBwt
                     await fileStream.WriteAsync(transformation);
                     await fileStream.DisposeAsync();
                     
-                    _compressorAlgorithm.Compress(name, pOutFile);
+                    _compressorAlgorithm.Compress(name, pOutFile, out _);
                     File.Delete(name);
                     break;
                 }
@@ -62,7 +62,7 @@ namespace Lzw.DemoWithBwt
                     await fileStream.WriteAsync(transformation);
                     await fileStream.DisposeAsync();
                    
-                    _compressorAlgorithm.Decompress(name, pOutFile);
+                    _compressorAlgorithm.Decompress(name, pOutFile, out _);
                     
                     File.Delete(name);
                     break;
@@ -78,7 +78,7 @@ namespace Lzw.DemoWithBwt
                     break;
                 }
                 case "-d":
-                    _compressorAlgorithm.Decompress(pInFile, pOutFile);
+                    _compressorAlgorithm.Decompress(pInFile, pOutFile, out _);
                     break;
             }
         }

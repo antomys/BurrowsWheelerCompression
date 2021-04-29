@@ -2,7 +2,7 @@
 { 
     public interface ICompressorAlgorithm
     {
-        bool Compress(string pIntputFileName, string pOutputFileName);
-        bool Decompress(string pIntputFileName, string pOutputFileName);
+        bool Compress(string pInputFileName, string pOutputFileName, out string fileNamePath);
+        bool Decompress(string pInputFileName, string pOutputFileName, out string fileNamePath);
     }
 }
