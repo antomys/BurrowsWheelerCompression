@@ -69,12 +69,12 @@ namespace Lzw.DemoWithBwt
                 }
                 case "-hc":
                 {
-                    MainAlgorithms.CompressFile(pInFile,pOutFile);
+                    MainAlgorithms.CompressFile(pInFile,pOutFile, out _);
                     break;
                 }
                 case "-hd":
                 {
-                    MainAlgorithms.DecompressFile(pInFile,pOutFile);
+                    MainAlgorithms.DecompressFile(pInFile,pOutFile, out _);
                     break;
                 }
                 case "-d":

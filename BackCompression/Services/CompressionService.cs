@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using CompressionLibrary.Bwt;
+using CompressionLibrary.Huffman;
 using CompressionLibrary.Lzw;
 using Lzw.DemoWithBwt;
 
@@ -57,14 +58,18 @@ namespace BackCompression.Services
             return Path.GetFullPath(pOutFile);
         }
 
-        public void CompressHuffman(string pInFile, string pOutFile)
+        public string CompressHuffman(string pInFile, string pOutFile)
         {
-            throw new System.NotImplementedException();
+            MainAlgorithms.CompressFile(pInFile,pOutFile, out var fullPath);
+            return fullPath;
         }
 
-        public void DecompressHuffman(string pInFile, string pOutFile)
+        public string DecompressHuffman(string pInFile, string pOutFile)
         {
-            throw new System.NotImplementedException();
+            MainAlgorithms.DecompressFile(pInFile,pOutFile, out var fullPath);
+            return fullPath;
         }
+        
+        
     }
 }

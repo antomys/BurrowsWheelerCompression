@@ -10,7 +10,7 @@ namespace CompressionLibrary.Huffman {
 
 		private static byte[] sign = { 0x5a, 0x52, 0x41, 0x48 };
 
-		public static void HuffConsole (string inputFile, string outputFile) {
+		public static void HuffConsole(string inputFile, string outputFile, out string filePath) {
 			try {
 				Stream ifstream = new FileStream (inputFile, FileMode.Open, FileAccess.Read);
 				Stream ofstream = new FileStream (outputFile, FileMode.Create, FileAccess.ReadWrite);
@@ -40,8 +40,11 @@ namespace CompressionLibrary.Huffman {
 				PrintHelper.Notify ("\nOriginal file CRC32 is {0:X8}\n", crc.GetCrc ());
 				ofstream.Close();
 				ifstream.Close ();
+				filePath = Path.GetFullPath(outputFile);
 			}
-			catch (Exception e) {
+			catch (Exception e)
+			{
+				filePath = string.Empty;
                 throw;
             }
 		}
@@ -79,7 +82,7 @@ namespace CompressionLibrary.Huffman {
 		}
 
 		public static void Huff (Stream sin, Stream sout) {
-			Tree t = new Tree ();
+			var t = new Tree ();
 			int rd, i, tmp;
 			Stack<int> ret;
 			BitIo bw = new BitIo (sout, true);
@@ -110,9 +113,9 @@ namespace CompressionLibrary.Huffman {
 			bw.Close();
 		}
 
-		public static void UnHuffConsole (string InputFile, string OutputFile) {
-			Stream ifstream = new FileStream (InputFile, FileMode.Open, FileAccess.Read);
-			Stream ofstream = new FileStream (OutputFile, FileMode.Create, FileAccess.ReadWrite);
+		public static void UnHuffConsole(string inputFile, string outputFile, out string filePath) {
+			Stream ifstream = new FileStream (inputFile, FileMode.Open, FileAccess.Read);
+			Stream ofstream = new FileStream (outputFile, FileMode.Create, FileAccess.ReadWrite);
 			CrcCalc crcCalc = new CrcCalc ();
 			uint crc_old, crc_new;
 			
@@ -138,16 +141,16 @@ namespace CompressionLibrary.Huffman {
 			crc_old = BitConverter.ToUInt32 (buffer, 0);
 			PrintHelper.Notify ("Stored crc is {0:X8}\n", crc_old);
 			
-			Thread myDecompressor = new Thread (o => 
-			                                    {
+			var myDecompressor = new Thread (o => 
+			{
 				try {
-				UnHuff (ifstream, ofstream, x => crcCalc.UpdateByte ((byte)x));
+					UnHuff (ifstream, ofstream, x => crcCalc.UpdateByte ((byte)x));
 				}
 				catch (Exception e) {
 					PrintHelper.Err("\n" + e.Message);
 				}
 			});
-				myDecompressor.Start ();
+			myDecompressor.Start ();
 			while (myDecompressor.IsAlive) {
 				PrintHelper.Notify ("\rDecompressed {0} bytes out of {1}", ifstream.Position, ifstream.Length);
 				Thread.Sleep (100);
@@ -161,6 +164,7 @@ namespace CompressionLibrary.Huffman {
 				PrintHelper.Err ("Checksum mismatch - decompressed" + " file may contain corrupted data\n");
 			ofstream.Close();
 			ifstream.Close();
+			filePath = Path.GetFullPath(outputFile);
 		}
 
 		public static void UnHuff (Stream InStream, Stream OutStream, UpdateCrc callback) {

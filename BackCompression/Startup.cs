@@ -1,4 +1,5 @@
 using BackCompression.Services;
+using BackCompression.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,8 @@ namespace BackCompression
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<ICompressionService, CompressionService>();
+            services.AddSingleton<ICompressionService, CompressionService>()
+                .AddSingleton<IBwtService,BwtService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "BackCompression", Version = "v1"});

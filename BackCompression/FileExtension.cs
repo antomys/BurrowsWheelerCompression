@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BackCompression
 {
-    public static class WriteFileExtension
+    public static class FileExtension
     {
         public static async Task<string> WriteFile(IFormFile file)
         {
@@ -31,6 +31,7 @@ namespace BackCompression
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //log error
             }
 
