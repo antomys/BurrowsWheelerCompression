@@ -5,41 +5,41 @@ using System.Threading;
 
 namespace CompressionLibrary.Huffman {
 
-	public class Compressor {
+	public static class Compressor {
 		public delegate void UpdateCrc (int value);
 
 		private static byte[] sign = { 0x5a, 0x52, 0x41, 0x48 };
 
 		public static void HuffConsole(string inputFile, string outputFile, out string filePath) {
 			try {
-				Stream ifstream = new FileStream (inputFile, FileMode.Open, FileAccess.Read);
-				Stream ofstream = new FileStream (outputFile, FileMode.Create, FileAccess.ReadWrite);
-				CrcCalc crc = new CrcCalc ();
+				Stream ifStream = new FileStream (inputFile, FileMode.Open, FileAccess.Read);
+				Stream ofStream = new FileStream (outputFile, FileMode.Create, FileAccess.ReadWrite);
+				var crc = new CrcCalc ();
 			
 				//Writing file signature
-				ofstream.Write (sign, 0, sign.Length);
+				ofStream.Write (sign, 0, sign.Length);
 				//Padding for the header
-				for (int i = 0; i < 12; i++)
-					ofstream.WriteByte (0x0);
+				for (var i = 0; i < 12; i++)
+					ofStream.WriteByte (0x0);
 			
-				Thread myCompressor = new Thread (o => Huff (ifstream, ofstream, val => crc.UpdateByte ((byte)val)));
+				var myCompressor = new Thread (o => Huff (ifStream, ofStream, val => crc.UpdateByte ((byte)val)));
 				myCompressor.Start ();
 			
 				while (myCompressor.IsAlive) {
-					Console.Write ("\rCompressed {0} out of {1}", ifstream.Position, ifstream.Length);
+					Console.Write ("\rCompressed {0} out of {1}", ifStream.Position, ifStream.Length);
 					Thread.Sleep (100);
 				}
 				//Writing file length to the header
-				ofstream.Seek (4, SeekOrigin.Begin);
-				byte[] buffer = BitConverter.GetBytes (ofstream.Length);
-				ofstream.Write (buffer, 0, buffer.Length);
+				ofStream.Seek (4, SeekOrigin.Begin);
+				var buffer = BitConverter.GetBytes (ofStream.Length);
+				ofStream.Write (buffer, 0, buffer.Length);
 			
-				//Writitng file crc immediately after the length
+				//Writing file crc immediately after the length
 				buffer = BitConverter.GetBytes (crc.GetCrc ());
-				ofstream.Write (buffer, 0, buffer.Length);
+				ofStream.Write (buffer, 0, buffer.Length);
 				PrintHelper.Notify ("\nOriginal file CRC32 is {0:X8}\n", crc.GetCrc ());
-				ofstream.Close();
-				ifstream.Close ();
+				ofStream.Close();
+				ifStream.Close ();
 				filePath = Path.GetFullPath(outputFile);
 			}
 			catch (Exception e)
@@ -49,11 +49,11 @@ namespace CompressionLibrary.Huffman {
             }
 		}
 
-		public static void Huff (Stream sin, Stream sout, UpdateCrc callback) {
-			Tree t = new Tree ();
+		private static void Huff (Stream sin, Stream sout, UpdateCrc callback) {
+			var t = new Tree ();
 			int rd, i, tmp;
 			Stack<int> ret;
-			BitIo bw = new BitIo (sout, true);
+			var bw = new BitIo (sout, true);
 			while ((rd = sin.ReadByte ()) != -1) {
 				tmp = rd;
 				callback ((byte)tmp);
