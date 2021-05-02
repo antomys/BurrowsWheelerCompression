@@ -7,21 +7,21 @@ namespace CompressionLibrary.Huffman {
 		bool ownStream = false, IsOut = false, open = false;
 		private BitIo () {
 		}
-		public BitIo (Stream stream, bool IsOut) {
+		public BitIo (Stream stream, bool isOut) {
 			this.stream = stream;
 			open = true;
-			this.IsOut = IsOut;
-			if (!IsOut)
+			this.IsOut = isOut;
+			if (!isOut)
 				bi = stream.ReadByte ();
 		}
 
-		public BitIo (string FileName, bool IsOut) {
+		public BitIo (string fileName, bool isOut) {
 			ownStream = true;
 			open = true;
-			if (IsOut)
-				stream = new FileStream (FileName, FileMode.Create, FileAccess.Write);
+			if (isOut)
+				stream = new FileStream (fileName, FileMode.Create, FileAccess.Write);
 			else
-				stream = new FileStream (FileName, FileMode.Open, FileAccess.Read);
+				stream = new FileStream (fileName, FileMode.Open, FileAccess.Read);
 		}
 
 		public void Close() {
@@ -34,12 +34,9 @@ namespace CompressionLibrary.Huffman {
 
 		byte buffer = 0, bits = 0;
 
-		public bool CanRead {
-			get { return this.open && !IsOut; }
-		}
-		public bool CanWrite {
-			get { return this.open && IsOut; }
-		}
+		public bool CanRead => open && !IsOut;
+
+		public bool CanWrite => open && IsOut;
 
 		public void WriteBit (int bit) {
 			if (!open)

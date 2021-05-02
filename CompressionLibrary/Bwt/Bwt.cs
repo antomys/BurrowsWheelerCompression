@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace CompressionLibrary.Bwt
 {
     public static class Bwt
     {
         /// <summary>
-        /// 
+        /// Transforms input bytes using Bwt
         /// </summary>
         /// <param name="input">Type byte[], should return transformed byte[]</param>
         /// <returns></returns>
@@ -37,7 +36,7 @@ namespace CompressionLibrary.Bwt
             return output;
         }
         /// <summary>
-        /// 
+        /// transforms bwt to initial byte array
         /// </summary>
         /// <param name="input">Type byte[] should return inverse transformed byte[]</param>
         /// <returns></returns>
@@ -48,23 +47,23 @@ namespace CompressionLibrary.Bwt
             var freq = new int[256];
             Array.Clear(freq, 0, freq.Length);
             // T1: Number of Preceding Symbols Matching Symbol in Current Position.
-            var T1 = new int[length];
+            var t1 = new int[length];
             // T2: Number of Symbols Lexicographically Less Than Current Symbol
-            var T2 = new int[256];
-            Array.Clear(T2, 0, T2.Length);
+            var t2 = new int[256];
+            Array.Clear(t2, 0, t2.Length);
             // Construct T1
             for (var i = 0; i < length; i++)
             {
-                T1[i] = freq[input[i]];
+                t1[i] = freq[input[i]];
                 freq[input[i]]++;
             }
 
             // Construct T2
             // Add $ special symbol in consideration to be less than any symbol
-            T2[0] = 1;
+            t2[0] = 1;
             for (var i = 1; i < 256; i++)
             {
-                T2[i] = T2[i - 1] + freq[i - 1];
+                t2[i] = t2[i - 1] + freq[i - 1];
             }
 
             var output = new byte[length];
@@ -72,8 +71,8 @@ namespace CompressionLibrary.Bwt
             for (var i = length - 1; i >= 0; i--)
             {
                 output[i] = input[nxt];
-                var a = T1[nxt];
-                var b = T2[input[nxt]];
+                var a = t1[nxt];
+                var b = t2[input[nxt]];
                 nxt = a + b;
                 // Add $ special symbol index in consideration
                 if (nxt >= I)

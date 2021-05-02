@@ -4,19 +4,21 @@ using System.Text.RegularExpressions;
 
 namespace CompressionLibrary.Lzw
 {
-    public class FileNameSelector
+    public static class FileNameSelector
     {
         public static string GetFileName(string pFileName)
         {
-            string newFileName = pFileName;
-            if (File.Exists(pFileName))
-            {
-                Console.WriteLine(pFileName + " already exists. Overwrite it?");
-                string response = PromptUserYnq().ToLower();
+            var newFileName = pFileName;
+            if (!File.Exists(pFileName)) return newFileName;
+            Console.WriteLine(pFileName + " already exists. Overwrite it?");
+            var response = PromptUserYnq().ToLower();
                 
-                if (response.Equals("n"))
+            switch (response)
+            {
+                case "n":
                     newFileName = PromptUserFileName();
-                else if (response.Equals("q"))
+                    break;
+                case "q":
                     return null;
             }
 
@@ -25,9 +27,9 @@ namespace CompressionLibrary.Lzw
 
         private static string PromptUserYnq()
         {
-            Regex goodResponse = new Regex("[ynqYNQ]");
+            var goodResponse = new Regex("[ynqYNQ]");
             string lineRead;
-            bool firstRun = true;
+            var firstRun = true;
 
             do
             {

@@ -9,8 +9,8 @@ namespace Bwt.Demo {
         {
             var filePath = Console.ReadLine() ?? throw new ArgumentNullException();
             var file = File.ReadAllBytes(filePath);
-            var bytes = CompressionLibrary.Bwt.Bwt.Transform(file);
-            using var fs = new FileStream("2.txt", FileMode.Create);
+            var bytes = CompressionLibrary.Bwt.Bwt.InverseTransform(file);
+            using var fs = new FileStream("2.pdf", FileMode.Create);
             using var writer = new BinaryWriter(fs);
             writer.Write(bytes);
         }
