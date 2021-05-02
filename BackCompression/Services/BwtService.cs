@@ -9,7 +9,7 @@ namespace BackCompression.Services
     {
         public async Task<string> Transform(string fileName)
         {
-            var bytes = CompressionLibrary.Bwt.Bwt.Transform(await File.ReadAllBytesAsync(fileName));
+            var bytes = await CompressionLibrary.Bwt.Bwt.Transform(await File.ReadAllBytesAsync(fileName));
 
             var outputName = "BWT " + Guid.NewGuid() + ".bwt";
             await using var fileStream = new FileStream(outputName, FileMode.Create);
@@ -20,7 +20,7 @@ namespace BackCompression.Services
 
         public async Task<string> InverseTransform(string fileName)
         {
-            var bytes = CompressionLibrary.Bwt.Bwt.InverseTransform(await File.ReadAllBytesAsync(fileName));
+            var bytes = await CompressionLibrary.Bwt.Bwt.InverseTransform(await File.ReadAllBytesAsync(fileName));
            
             var outputName = "InvBWT " + Guid.NewGuid();
             await using var fileStream = new FileStream(outputName, FileMode.Create);
