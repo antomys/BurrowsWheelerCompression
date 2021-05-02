@@ -39,7 +39,6 @@ namespace BackCompression.Services
                     
             _compressorAlgorithm.Compress(name, pOutFile, out var fullPath);
             File.Delete(name);
-
             return fullPath;
         }
 
@@ -51,10 +50,8 @@ namespace BackCompression.Services
             await using var fileStream = new FileStream(pOutFile, FileMode.Create);
             await fileStream.WriteAsync(transformation);
             await fileStream.DisposeAsync();
-                    
-           
+            
             File.Delete(name);
-
             return Path.GetFullPath(pOutFile);
         }
 
