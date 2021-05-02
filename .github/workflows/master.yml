@@ -23,3 +23,14 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      
+  convert_via_pandoc:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: echo "foo" > input.txt # create an example file
+      - uses: docker://pandoc/core:2.9
+        with:
+          args: >- # allows you to break string into multiple lines
+            --standalone
+            --output=README.MD
+            Diploma_Volokhovych.docx
