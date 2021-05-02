@@ -42,7 +42,7 @@ namespace CompressionLibrary.Huffman {
 				ifStream.Close ();
 				filePath = Path.GetFullPath(outputFile);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				filePath = string.Empty;
                 throw;

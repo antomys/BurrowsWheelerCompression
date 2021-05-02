@@ -43,7 +43,7 @@ namespace Lzw.DemoWithBwt
                     break;
                 case "-bwtc":
                 {
-                    var transformation = Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
+                    var transformation = await Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
                     var name = Guid.NewGuid() + ".tmp";
                     await using var fileStream = new FileStream(name, FileMode.Create);
                     await fileStream.WriteAsync(transformation);
@@ -58,7 +58,7 @@ namespace Lzw.DemoWithBwt
                     var name = Guid.NewGuid() + ".tmp";
                     _compressorAlgorithm.Decompress(pInFile, name, out _);
                     
-                    var transformation = Bwt.InverseTransform(await File.ReadAllBytesAsync(name));
+                    var transformation = await Bwt.InverseTransform(await File.ReadAllBytesAsync(name));
                     
                     await using var fileStream = new FileStream(pOutFile, FileMode.Create);
                     await fileStream.WriteAsync(transformation);

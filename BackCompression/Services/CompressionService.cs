@@ -31,7 +31,7 @@ namespace BackCompression.Services
 
         public async Task<string> CompressLzwBwt(string pInFile, string pOutFile)
         {
-            var transformation = Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
+            var transformation = await Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
             var name = Guid.NewGuid() + ".tmp";
             await using var fileStream = new FileStream(name, FileMode.Create);
             await fileStream.WriteAsync(transformation);
@@ -46,7 +46,7 @@ namespace BackCompression.Services
         {
             var name = Guid.NewGuid() + ".tmp";
             await Task.FromResult(_compressorAlgorithm.Decompress(pInFile, name, out var fullPath));
-            var transformation = Bwt.InverseTransform(await File.ReadAllBytesAsync(fullPath));
+            var transformation = await Bwt.InverseTransform(await File.ReadAllBytesAsync(fullPath));
             await using var fileStream = new FileStream(pOutFile, FileMode.Create);
             await fileStream.WriteAsync(transformation);
             await fileStream.DisposeAsync();
