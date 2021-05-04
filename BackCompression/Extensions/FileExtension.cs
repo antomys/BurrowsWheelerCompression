@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace BackCompression
+namespace BackCompression.Extensions
 {
     public static class FileExtension
     {

@@ -2,17 +2,20 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using BackCompression.Extensions;
 using BackCompression.Services;
 using BackCompression.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
-using static BackCompression.FileExtension;
+using static BackCompression.Extensions.FileExtension;
 
 namespace BackCompression.Controllers
 {
     [ApiController]
+    [DisableRequestSizeLimit]
+    [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
     [Route("[controller]/[action]")]
     public class CompressionController : ControllerBase
     {
@@ -44,6 +47,7 @@ namespace BackCompression.Controllers
             
             _stopwatch.Stop();
             _logger.LogInformation($"[{DateTime.Now}] BWT Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
             
             return await GenerateDownloadLink(outputFile);
         }
@@ -60,6 +64,7 @@ namespace BackCompression.Controllers
             
             _stopwatch.Stop();
             _logger.LogInformation($"[{DateTime.Now}] LZW Vanilla Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
 
             return await GenerateDownloadLink(outputFile);
         }
@@ -76,6 +81,7 @@ namespace BackCompression.Controllers
             
             _stopwatch.Stop();
             _logger.LogInformation($"[{DateTime.Now}] Lzw+Bwt Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
 
             return await GenerateDownloadLink(outputFile);
         }
@@ -91,6 +97,7 @@ namespace BackCompression.Controllers
             
             _stopwatch.Stop();
             _logger.LogInformation($"[{DateTime.Now}] Huffman Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
 
             return await GenerateDownloadLink(outputFile);
         }

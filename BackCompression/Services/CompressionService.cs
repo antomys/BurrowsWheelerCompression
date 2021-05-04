@@ -5,6 +5,7 @@ using CompressionLibrary.Bwt;
 using CompressionLibrary.Huffman;
 using CompressionLibrary.Lzw;
 using Lzw.DemoWithBwt;
+using Microsoft.Extensions.Logging;
 
 namespace BackCompression.Services
 {
