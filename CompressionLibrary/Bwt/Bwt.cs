@@ -14,6 +14,7 @@ namespace CompressionLibrary.Bwt
         {
             var task = Task.Factory.StartNew(() =>
             {
+                Console.WriteLine("Performing BWT");
                 var output = new byte[input.Length + 4];
                 var newInput = new short[input.Length + 1];
 
@@ -38,6 +39,7 @@ namespace CompressionLibrary.Bwt
 
                 var endByte = IntToByteArr(end);
                 endByte.CopyTo(output, input.Length);
+                Console.WriteLine("BWT Ended");
                 return output;
             });
 

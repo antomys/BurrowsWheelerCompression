@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using BackCompression.Extensions;
-using BackCompression.Services;
 using BackCompression.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +77,22 @@ namespace BackCompression.Controllers
             var outputFile = compress ?
                 await _compressionService.CompressLzwBwt(inputFile, Path.GetFileNameWithoutExtension(inputFile) + ".lzwb") :
                 await _compressionService.DecompressLzwBwt(inputFile, Path.GetFileNameWithoutExtension(inputFile));
+            
+            _stopwatch.Stop();
+            _logger.LogInformation($"[{DateTime.Now}] Lzw+Bwt Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
+
+            return await GenerateDownloadLink(outputFile);
+        }
+        [HttpPost]
+        public async Task<IActionResult> BwCompression(IFormFile formFile, bool compress = true)
+        {
+            var inputFile = await WriteFile(formFile);
+
+            _stopwatch.Restart();
+            var outputFile = compress ?
+                await _compressionService.CompressBwt(inputFile, Path.GetFileNameWithoutExtension(inputFile) + ".bwc") :
+                await _compressionService.DecompressBwt(inputFile, Path.GetFileNameWithoutExtension(inputFile));
             
             _stopwatch.Stop();
             _logger.LogInformation($"[{DateTime.Now}] Lzw+Bwt Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
