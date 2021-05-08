@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using BackCompression.Services.Interfaces;
 using CompressionLibrary.Bwt;
 using CompressionLibrary.Huffman;
 using CompressionLibrary.Lzw;
@@ -28,6 +29,27 @@ namespace BackCompression.Services
         {
             _compressorAlgorithm.Decompress(pInFile, pOutFile, out var fileNamePath);
             return fileNamePath;
+        }
+
+        public async Task<string> CompressBwt(string pInFile, string pOutFile)
+        {
+            var bytes = await File.ReadAllBytesAsync(pInFile);
+            var transformation = await BwCompression.Compress(bytes);
+            await using var fs = new FileStream(pOutFile, FileMode.Create);
+            await using var writer = new BinaryWriter(fs);
+            writer.Write(transformation);
+           
+            return Path.GetFullPath(pOutFile);
+        }
+        public async Task<string> DecompressBwt(string pInFile, string pOutFile)
+        {
+            var bytes = await File.ReadAllBytesAsync(pInFile);
+            var transformation = await BwCompression.Decompress(bytes);
+            await using var fs = new FileStream(pOutFile, FileMode.Create);
+            await using var writer = new BinaryWriter(fs);
+            writer.Write(transformation);
+
+            return Path.GetFullPath(pOutFile);
         }
 
         public async Task<string> CompressLzwBwt(string pInFile, string pOutFile)

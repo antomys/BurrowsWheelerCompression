@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CompressionLibrary.Bwt;
 using CompressionLibrary.Huffman;
 using CompressionLibrary.Lzw;
+using ICSharpCode.SharpZipLib.BZip2;
 
 namespace Lzw.DemoWithBwt
 {
@@ -40,8 +41,9 @@ namespace Lzw.DemoWithBwt
             {
                 case "-c":
                     _compressorAlgorithm.Compress(pInFile, pOutFile, out _);
+                    GetCompressionRate(pInFile, pOutFile);
                     break;
-                case "-bwtc":
+                case "-lzbwc":
                 {
                     var transformation = await Bwt.Transform(await File.ReadAllBytesAsync(pInFile));
                     var name = Guid.NewGuid() + ".tmp";
@@ -50,10 +52,36 @@ namespace Lzw.DemoWithBwt
                     await fileStream.DisposeAsync();
                     
                     _compressorAlgorithm.Compress(name, pOutFile, out _);
+                    
+                    GetCompressionRate(pInFile, pOutFile);
                     File.Delete(name);
                     break;
                 }
+                case "-bwtc":
+                {
+                    var bytes = await File.ReadAllBytesAsync(pInFile);
+                    var transformation = await BwCompression.Compress(bytes);
+                    await using var fs = new FileStream(pOutFile, FileMode.Create);
+                    await using var writer = new BinaryWriter(fs);
+                    writer.Write(transformation);
+                    await writer.DisposeAsync();
+                    
+                    GetCompressionRate(pInFile, pOutFile);
+                    break;
+                }
                 case "-bwtd":
+                {
+                    var bytes = await File.ReadAllBytesAsync(pInFile);
+                    var transformation = await BwCompression.Decompress(bytes);
+                    await using var fs = new FileStream(pOutFile, FileMode.Create);
+                    await using var writer = new BinaryWriter(fs);
+                    writer.Write(transformation);
+                    await writer.DisposeAsync();
+                    
+                    GetCompressionRate(pInFile, pOutFile);
+                    break;
+                }
+                case "-lzbwd":
                 {
                     var name = Guid.NewGuid() + ".tmp";
                     _compressorAlgorithm.Decompress(pInFile, name, out _);
@@ -64,29 +92,65 @@ namespace Lzw.DemoWithBwt
                     await fileStream.WriteAsync(transformation);
                     await fileStream.DisposeAsync();
 
-
+                    GetCompressionRate(pInFile, pOutFile);
                     File.Delete(name);
                     break;
                 }
                 case "-hc":
                 {
                     MainAlgorithms.CompressFile(pInFile,pOutFile, out _);
+                    GetCompressionRate(pInFile, pOutFile);
                     break;
                 }
                 case "-hd":
                 {
                     MainAlgorithms.DecompressFile(pInFile,pOutFile, out _);
+                    GetCompressionRate(pInFile, pOutFile);
                     break;
                 }
                 case "-d":
                     _compressorAlgorithm.Decompress(pInFile, pOutFile, out _);
+                    GetCompressionRate(pInFile, pOutFile);
                     break;
+                case "-bc":
+                {
+                    await using var fileToBeZippedAsStream = File.OpenRead(pInFile);
+                    await using var zipTargetAsStream = File.Create(pOutFile);
+                    try
+                    {
+                        BZip2.Compress(fileToBeZippedAsStream, zipTargetAsStream, true, 4096);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    GetCompressionRate(pInFile, pOutFile);
+                    break;
+                }
             }
+        }
+
+        private static void GetCompressionRate(string inputFile, string outputFile)
+        {
+            var inputFileSize = new FileInfo(inputFile).Length;
+            var outputFileSize = new FileInfo(outputFile).Length; 
+            var difference = Math.Abs(inputFileSize - outputFileSize);
+            var percentage = difference / (inputFileSize / 100.0);
+            
+            if (outputFileSize > inputFileSize)
+                percentage *= -1;
+
+            Console.WriteLine( $"[{DateTime.Now}]: Input file size: {inputFileSize};\n" +
+                               $"Output file size: {outputFileSize};\n" +
+                               $"Difference: {difference}\n" +
+                               $"Compression rate: {percentage}");
+           
+                    
         }
 
         private static async Task Main(string[] args)
         {
-            var validCommands = new Regex("-[cdCDbwtcBWTCbwtdBWTDhcHChdHD]");
+            var validCommands = new Regex("-[cdCDbwtcBWTCbwtdBWTDhcHChdHDbcBClzbwclzbwd]");
 
             if (args.Length != 3)
             {
