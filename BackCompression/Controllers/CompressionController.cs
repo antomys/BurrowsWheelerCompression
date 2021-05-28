@@ -85,7 +85,7 @@ namespace BackCompression.Controllers
             return await GenerateDownloadLink(outputFile);
         }
         [HttpPost]
-        public async Task<IActionResult> BwCompression(IFormFile formFile, bool compress = true)
+        public async Task<IActionResult> HuffmanBwtMtfCompress(IFormFile formFile, bool compress = true)
         {
             var inputFile = await WriteFile(formFile);
 
@@ -95,7 +95,24 @@ namespace BackCompression.Controllers
                 await _compressionService.DecompressBwt(inputFile, Path.GetFileNameWithoutExtension(inputFile));
             
             _stopwatch.Stop();
-            _logger.LogInformation($"[{DateTime.Now}] Lzw+Bwt Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation($"[{DateTime.Now}] HuffmanBwtMtf Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
+            _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
+
+            return await GenerateDownloadLink(outputFile);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> LzwBwtMtfCompress(IFormFile formFile, bool compress = true)
+        {
+            var inputFile = await WriteFile(formFile);
+
+            _stopwatch.Restart();
+            var outputFile = compress ?
+                await _compressionService.LzwBwtCompress(inputFile, Path.GetFileNameWithoutExtension(inputFile) + ".bwc") :
+                await _compressionService.LzwBwtDecompress(inputFile, Path.GetFileNameWithoutExtension(inputFile));
+            
+            _stopwatch.Stop();
+            _logger.LogInformation($"[{DateTime.Now}] LzwBwtMtf Time: {_stopwatch.ElapsedMilliseconds / 1000.0} ms");
             _logger.LogInformation(StatisticsExtension.GetCompressionRate(inputFile,outputFile));
 
             return await GenerateDownloadLink(outputFile);

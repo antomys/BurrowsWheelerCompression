@@ -1,4 +1,4 @@
-﻿namespace CompressionLibrary.Bwt
+﻿namespace CompressionLibrary.Mtf
 {
     public static class MoveToFrontCoding
     {

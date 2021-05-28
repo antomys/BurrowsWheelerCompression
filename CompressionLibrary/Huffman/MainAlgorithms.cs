@@ -16,6 +16,7 @@ namespace CompressionLibrary.Huffman
                 PrintHelper.Err("Unable to compress the file due to the error: " + e.Message);
             }
         }
+        
         public static void DecompressFile (string filename, string fileOutName, out string filePath) {
             try {
                 Compressor.UnHuffConsole(filename, fileOutName, out var file);

@@ -60,7 +60,7 @@ namespace Lzw.DemoWithBwt
                 case "-bwtc":
                 {
                     var bytes = await File.ReadAllBytesAsync(pInFile);
-                    var transformation = await BwCompression.Compress(bytes);
+                    var transformation = await HuffmanBwt.Compress(bytes);
                     await using var fs = new FileStream(pOutFile, FileMode.Create);
                     await using var writer = new BinaryWriter(fs);
                     writer.Write(transformation);
@@ -72,7 +72,7 @@ namespace Lzw.DemoWithBwt
                 case "-bwtd":
                 {
                     var bytes = await File.ReadAllBytesAsync(pInFile);
-                    var transformation = await BwCompression.Decompress(bytes);
+                    var transformation = await HuffmanBwt.Decompress(bytes);
                     await using var fs = new FileStream(pOutFile, FileMode.Create);
                     await using var writer = new BinaryWriter(fs);
                     writer.Write(transformation);
