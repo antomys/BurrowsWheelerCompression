@@ -1,2 +1,2 @@
-## DiplomaWork
-BWT Доброго дня, Ігор! Перетворення Барроуза - Уіллера не стискає. Це допоміжне. Може бути як диплом. Треба: 1.вивчити теоретично перетворення Барроуза - Уіллера 2.Запрограмувати 3.Зробити огляд основних методів стиснення 4.Порівняти наприклад LZW з БУ та без БУ Наскільки покращення? З повагою, А.В.
+## Compression Algorithms
+This repository contains library of implemented compression algorithms, some demo projects to show their work.
