@@ -14,14 +14,14 @@ namespace BackCompression.Extensions
                 var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
                 var fileName = DateTime.Now.Ticks + extension;
 
-                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files");
+                var pathBuilt = Path.Combine(Directory.GetCurrentDirectory(), "Upload/files");
 
                 if (!Directory.Exists(pathBuilt))
                 {
                     Directory.CreateDirectory(pathBuilt);
                 }
 
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\files",
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Upload/files",
                     fileName);
 
                 await using var stream = new FileStream(path, FileMode.Create);
