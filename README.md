@@ -8,7 +8,7 @@ This repository contains library of implemented compression algorithms, some dem
     - [x] Implement custom query
     - [x] Implement Suffix Array 
 - [x] Implement Move-To-Front (MTF) algorithm
-- [ ] Implement Run-Length-Encoding (RLE) algorithm
+- [x] Implement Run-Length-Encoding (RLE) algorithm
 - [x] Modify Lzw with Bwt without anything else
 - [x] Modify Huffman with Bwt withoud anything else
 - [x] Develop and implement custom Bwt + Mtf + Lzw algorithm
