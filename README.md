@@ -13,24 +13,24 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/antomys/BurrowsWheelerCompression">
-    <img src="assets/icon.png" alt="Logo" width="120" height="120">
+  <a href="https://github.com/antomys/CompressionAlgorithms">
+    <img src="assets/icon.png" alt="Logo" width="200" height="200">
   </a>
 
-<h3 align="center">BurrowsWheelerCompression</h3>
+<h3 align="center">Compression Algorithms</h3>
 
   <p align="center">
     This repository houses a collection of implemented compression algorithms along with demo projects that showcase their functionality.
     It serves as a resource for developers interested in data compression techniques and their practical applications.
     <br />
-    <a href="https://github.com/antomys/BurrowsWheelerCompression"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/antomys/CompressionAlgorithms"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/antomys/BurrowsWheelerCompression">View Demo</a>
+    <a href="https://github.com/antomys/CompressionAlgorithms">View Demo</a>
     ·
-    <a href="https://github.com/antomys/BurrowsWheelerCompression/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/antomys/CompressionAlgorithms/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/antomys/BurrowsWheelerCompression/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/antomys/CompressionAlgorithms/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -120,7 +120,7 @@ Welcome to the Curious Benchmarks! This repository is designed to help you explo
 
 1. **Clone the Repository**
     ```shell
-   git clone https://github.com/antomys/BurrowsWheelerCompression.git
+   git clone https://github.com/antomys/CompressionAlgorithms.git
    cd .\src\main
    ```
 
@@ -164,7 +164,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Ihor Volokhovych - [@incomingwebhook](https://t.me/incomingwebhook) - igorvolokhovych@gmail.com
 
-Project Link: [https://github.com/antomys/BurrowsWheelerCompression](https://github.com/antomys/BurrowsWheelerCompression)
+Project Link: [https://github.com/antomys/CompressionAlgorithms](https://github.com/antomys/CompressionAlgorithms)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,16 +185,16 @@ Project Link: [https://github.com/antomys/BurrowsWheelerCompression](https://git
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/antomys/BurrowsWheelerCompression.svg?style=for-the-badge
-[contributors-url]: https://github.com/antomys/BurrowsWheelerCompression/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/antomys/BurrowsWheelerCompression.svg?style=for-the-badge
-[forks-url]: https://github.com/antomys/BurrowsWheelerCompression/network/members
-[stars-shield]: https://img.shields.io/github/stars/antomys/BurrowsWheelerCompression.svg?style=for-the-badge
-[stars-url]: https://github.com/antomys/BurrowsWheelerCompression/stargazers
-[issues-shield]: https://img.shields.io/github/issues/antomys/BurrowsWheelerCompression.svg?style=for-the-badge
-[issues-url]: https://github.com/antomys/BurrowsWheelerCompression/issues
-[license-shield]: https://img.shields.io/github/license/antomys/BurrowsWheelerCompression.svg?style=for-the-badge
-[license-url]: https://github.com/antomys/BurrowsWheelerCompression/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/antomys/CompressionAlgorithms.svg?style=for-the-badge
+[contributors-url]: https://github.com/antomys/CompressionAlgorithms/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/antomys/CompressionAlgorithms.svg?style=for-the-badge
+[forks-url]: https://github.com/antomys/CompressionAlgorithms/network/members
+[stars-shield]: https://img.shields.io/github/stars/antomys/CompressionAlgorithms.svg?style=for-the-badge
+[stars-url]: https://github.com/antomys/CompressionAlgorithms/stargazers
+[issues-shield]: https://img.shields.io/github/issues/antomys/CompressionAlgorithms.svg?style=for-the-badge
+[issues-url]: https://github.com/antomys/CompressionAlgorithms/issues
+[license-shield]: https://img.shields.io/github/license/antomys/CompressionAlgorithms.svg?style=for-the-badge
+[license-url]: https://github.com/antomys/CompressionAlgorithms/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/ihor-volokhovych-23875217a/
 [NET]: https://img.shields.io/badge/-.NET%208.0-blueviolet
