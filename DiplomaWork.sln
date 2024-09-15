@@ -4,10 +4,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		README.md = README.md
 		stylecop.json = stylecop.json
 		Stylecop.RuleSet = Stylecop.RuleSet
-		Volokhovych_Burrows_Wheeler_Transformation_paper.pdf = Volokhovych_Burrows_Wheeler_Transformation_paper.pdf
+		compression-papers.pdf = compression-papers.pdf
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
