@@ -170,14 +170,6 @@ Project Link: [https://github.com/antomys/Compression-Algorithms](https://github
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Volodymyr Lyshenko](https://github.com/vovche)
-    - Volodymyr has been instrumental in expanding the scope of our performance analyses by proposing numerous innovative and insightful benchmark scenarios. His suggestions have led to the inclusion of several new benchmarks that explore previously unexamined aspects of .NET performance.
-    - Through creative input, Volodymyr has helped broaden the range of .NET approaches and techniques covered in this repository, making it a more comprehensive resource for the developer community.
-* [pro.net Telegram chat](https://t.me/pro_net)
-    - The members of [pro.net Telegram chat](https://t.me/pro_net) have provided thorough reviews of benchmarks, offering critical insights that have significantly improved the quality and reliability of performance analyses.
-    - Their innovative suggestions have led to the inclusion of new benchmark scenarios and the refinement of existing ones, broadening the scope and relevance of our investigations.
-    - On numerous occasions, [pro.net Telegram chat](https://t.me/pro_net) experts have shared their deep knowledge of .NET internals, helping us understand and explain complex performance behaviors observed in our benchmarks.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
