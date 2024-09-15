@@ -124,7 +124,6 @@ Welcome to the Curious Benchmarks! This repository is designed to help you explo
    cd .\src\main
    ```
 
-
 2. **Build the Solution**
     ```shell
    dotnet build
@@ -136,17 +135,7 @@ Welcome to the Curious Benchmarks! This repository is designed to help you explo
    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-4. Interpret Results
-    - Benchmark results will be displayed in the console;
-    - Detailed reports are generated in the `BenchmarkDotNet.Artifacts` folder.
-
-5. Explore and Contribute
-    - Check out different benchmark projects in the repository
-    - Feel free to add your own benchmarks or improve existing ones
-    - Submit pull requests for any enhancements or new investigations
-
-
-Happy benchmarking! If you have any questions or suggestions, please open an issue in the repository.
+If you have any questions or suggestions, please open an issue in the repository.
 
 
 <!-- CONTRIBUTING -->
