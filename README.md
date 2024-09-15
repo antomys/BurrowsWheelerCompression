@@ -67,8 +67,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 This project is part of my bachelor diploma work. See [Diploma papers](compression-papers.pdf).
 This project is a library of compression algorithms implemented in code. It serves two main purposes:
 
