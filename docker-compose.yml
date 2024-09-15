@@ -1,0 +1,6 @@
+﻿services:
+  burrowswheelertransform:
+    image: burrowswheelertransform
+    build:
+      context: .
+      dockerfile: src/main/BurrowsWheelerTransform/Dockerfile

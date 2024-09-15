@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-namespace BackCompression.Services.Interfaces
+namespace BackCompression.Services.Interfaces;
+
+public interface IBwtService
 {
-    public interface IBwtService
-    {
-        Task<string> Transform(string fileName);
-        Task<string> InverseTransform(string fileName);
-    }
+    ValueTask<string> Transform(string fileName);
+
+    ValueTask<string> InverseTransform(string fileName);
 }
