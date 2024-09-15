@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BurrowsWheelerTransform\BurrowsWheelerTransform.csproj" />
+        <ProjectReference Include="..\Huffman\Huffman.csproj" />
+        <ProjectReference Include="..\LempelZivWelch\LempelZivWelch.csproj" />
+        <ProjectReference Include="..\Lzw.DemoWithBwt\Lzw.DemoWithBwt.csproj"/>
+    </ItemGroup>
+
+</Project>
